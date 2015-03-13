@@ -1,0 +1,21 @@
+#!/usr/bin/env rake
+
+begin
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(:spec)
+
+  task default: ['spec']
+
+  task :cc_spec do
+    ENV['CODECLIMATE_REPO_TOKEN'] = '21c97736c657650b6a5f51a8c2229cf0635bcba774d3266a5a99e3812a85367c'
+    Rake::Task['spec'].invoke
+  end
+rescue LoadError
+end
+
+# RAILS_ENV should override RACK_ENV because of some capistrano nonsense
+ENV["RACK_ENV"] = ENV["RAILS_ENV"] || ENV["RACK_ENV"]
+
+Dir[File.dirname(__FILE__) + "/lib/tasks/*.rb"].sort.each do |path|
+  require path
+end

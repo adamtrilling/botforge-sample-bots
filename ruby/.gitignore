@@ -1,0 +1,6 @@
+log/*.log
+tmp/**/*
+tmp/
+._*
+.bundle
+bundle/*
